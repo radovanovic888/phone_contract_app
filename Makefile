@@ -9,4 +9,13 @@ TARGET = phone_contract_app
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-		$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
+
+%.o: %.c common.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS) $(TARGET) phone_contracts.db
+
+
+.PHONY: all clean
