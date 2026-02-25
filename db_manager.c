@@ -111,3 +111,15 @@ int get_contracts(Contract **contracts, int *count) {
     return 0;
 }
 
+int delete_contract(int id) {
+    sqlite3 *db;
+    char *err_msg = 0;
+    int rc = sqlite3_open(DB_NAME, &db);
+    if (rc != SQLITE_OK) return 1;
+
+    char sql[100];
+    sprintf(sql, "DELETE FROM contracts WHERE id = %d;", id);
+    rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
+    sqlite3_close(db);
+    return (rc == SQLITE_OK) ? 0 : 1;
+}
