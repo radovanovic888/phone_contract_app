@@ -9,7 +9,7 @@ MAN_DIR="/usr/local/share/man/man1"
 
 # Check for root privileges
 if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as sudo. Please use sudo."
+    echo "This script must be run as root. Please use sudo."
     exit 1
 fi
 
@@ -23,5 +23,7 @@ make -C ~/phone_contract_app
 echo "Installing the application..."
 mkdir -p $INSTALL_DIR
 cp ~/phone_contract_app/$APP_NAME $INSTALL_DIR
+
+# Optional:
 
 echo "Installation complete. You can now run the application by typing '$APP_NAME'."
