@@ -31,7 +31,7 @@ void draw_menu(int highlight) {
     clear();
     attron(COLOR_PAIR(1) | A_BOLD);
     mvprintw(y++, x, "=== Phone Contract Manager ===");
-    attroff(COLOR_PAIR(2) | A_BOLD);
+    attroff(COLOR_PAIR(1) | A_BOLD);
     y++;
 
     for (int i = 0; i < n_choices; ++i) {
@@ -52,7 +52,7 @@ void display_contracts(Contract *contracts, int count) {
     attron(COLOR_PAIR(1) | A_BOLD);
     mvprintw(1, 2, "%-15s %-15s %-15s %-12s %-12s %-10s", "Phone", "Company", "Plan", "Start", "End", "Bill");
     attroff(COLOR_PAIR(1) | A_BOLD);
-    mvprintw(2, 2, "------------------------------------------------------------------------------");
+    mvprintw(2, 2, "-------------------------------------------------------------------------------");
 
     for (int i = 0; i < count; i++) {
         mvprintw(3 + i, 2, "%-15s %-15s %-15s %-12s %-12s %-10.2f",
@@ -60,7 +60,7 @@ void display_contracts(Contract *contracts, int count) {
         contracts[i].start_date, contracts[i].end_date, contracts[i].monthly_bill);
     }
 
-    mvprintw(count +5, 2, "Press any key to return to menu...");
+    mvprintw(count + 5, 2, "Press any key to return to menu...");
     refresh();
     getch();
 }
@@ -102,6 +102,6 @@ int delete_contract_prompt() {
     attroff(COLOR_PAIR(1) | A_BOLD);
 
     char id_str[10];
-    get_input("Enter ID to delete (view list first to see IDs) :", id_str, 9, 3, 2);
+    get_input("Enter ID to delete (view list first to see IDs): ", id_str, 9, 3, 2);
     return atoi(id_str);
 }
