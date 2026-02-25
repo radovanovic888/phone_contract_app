@@ -19,7 +19,7 @@ void cleanup_ui() {
 }
 
 void draw_menu(int highlight) {
-    int x =2, y = 2;
+    int x = 2, y = 2;
     const char *choices[] = {
         "1. View All Contracts",
         "2. Add New Contract",
@@ -56,8 +56,8 @@ void display_contracts(Contract *contracts, int count) {
 
     for (int i = 0; i < count; i++) {
         mvprintw(3 + i, 2, "%-15s %-15s %-15s %-12s %-12s %-10.2f",
-        contracts[i].phone_number, contracts[i].company, contracts[i].service_plan, 
-        contracts[i].start_date, contracts[i].end_date, contracts[i].monthly_bill);
+            contracts[i].phone_number, contracts[i].company, contracts[i].service_plan, 
+            contracts[i].start_date, contracts[i].end_date, contracts[i].monthly_bill);
     }
 
     mvprintw(count + 5, 2, "Press any key to return to menu...");
