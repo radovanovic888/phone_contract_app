@@ -67,3 +67,47 @@ int insert_contract(Contract *c) {
 
     return (rc == SQLITE_DONE) ? 0 : 1;
 }
+
+int get_contracts(Contract **contracts, int *count) {
+    sqlite3 *db;
+    sqlite3_stmt *res;
+    int rc = sqlite3_open(DB_NAME, &db);
+
+    if (rc != SQLITE_OK) return 1;
+
+    const char *sql = "SELECT count(*) FROM contracts;";
+    rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
+    if (rc != SQLITE_OK) { sqlite3_close(db); return 1; }
+    sqlite3_step(res);
+    *count = sqlite3_column_int(res, 0);
+    sqlite3_finalize(res);
+
+    if (*count == 0) {
+        *contracts = NULL;
+        sqlite3_close(db);
+        return 0;
+    }
+
+    *contracts = malloc(sizeof(Contract) * (*count));
+    sql = "SELECT id, phone_number, company, service_plan, start_date, end_date, monthly_bill FROM contracts;";
+    rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
+
+    int i = 0;
+    while (sqlite3_step(res) == SQLITE_ROW) {
+        (*contracts)[i].id = sqlite3_column_int(res, 0);
+        strncpy((*contracts)[i].phone_number, (const char*)sqlite3_column_text(res, 1), 19);
+        strncpy((*contracts)[i].company, (const char*)sqlite3_column_text(res, 2), 49);
+        strncpy((*contracts)[i].service_plan, (const char*)sqlite3_column_text(res, 3), 99);
+        strncpy((*contracts)[i].start_date, (const char*)sqlite3_column_text(res, 4), 10);
+        const char *end_d = (const char*)sqlite3_column_text(res, 5);
+        if (end_d) strncpy((*contracts)[i].end_date, end_d, 10);
+        else (*contracts)[i].end_date[0] = '\0';
+        (*contracts)[i].monthly_bill = sqlite3_column_double(res, 6);
+        i++;
+    }
+
+    sqlite3_finalize(res);
+    sqlite3_close(db);
+    return 0;
+}
+
