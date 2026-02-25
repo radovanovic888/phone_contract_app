@@ -17,9 +17,11 @@ echo "Updating package list and installing dependencis..."
 apt-get update
 apt-get install -y build-essential libncurses-dev libsqlite3-dev sqlite3
 
+echo "Compiling the application..."
 make -C ~/phone_contract_app
 
+echo "Installing the application..."
 mkdir -p $INSTALL_DIR
 cp ~/phone_contract_app/$APP_NAME $INSTALL_DIR
 
-echo "OK"
+echo "Installation complete. You can now run the application by typing '$APP_NAME'."
