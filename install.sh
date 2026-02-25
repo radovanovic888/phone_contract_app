@@ -7,6 +7,7 @@ APP_NAME="phone_contract_app"
 INSTALL_DIR="/usr/local/bin"
 MAN_DIR="/usr/local/share/man/man1"
 
+# Check for root privileges
 if [ "$(id -u)" -ne 0 ]; then
     echo "This script must be run as sudo."
     exit 1
